@@ -11,8 +11,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './app/views'));
 app.set('public', path.join(__dirname, './app/public'));
 
-require('./app/models/User');  //should come before passport
-
+require('./app/models/User');//should come before passport
+require('./app/models/Player');
 require('./app/services/passport');
 
 mongoose.connect(keys.mongoose.uri);
