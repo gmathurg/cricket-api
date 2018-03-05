@@ -1,0 +1,40 @@
+{
+  "name": "cricket-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "engines": {
+    "node": "8.9.3",
+    "npm": "5.5.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "client": "npm run start --prefix client",
+    "dev": "npm run server"
+  },
+  "author": "Gaurav Mathur",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "concurrently": "^3.5.1",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.2",
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.3",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "path-parser": "^3.0.1",
+    "bootstrap": "^3.3.7",
+    "ejs": "^2.5.7",
+    "express-validator": "^4.3.0",
+    "moment": "^2.20.1",
+    "node-cache": "^4.1.1",
+    "request": "^2.83.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "cricket-api"
+  }
+}
