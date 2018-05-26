@@ -25,12 +25,12 @@ passport.use(new GoogleStrategy(
         proxy : true
     },
     async (accessToken, refreshToken, profile, done) => {
-        const existingUser =   await User.findOne({ socialId : profile.id });
+        const existingUser =   await User.findOne({ userId : profile.id });
         console.log(existingUser);
         if(existingUser)
             return done(null, existingUser); //error, user
 
-        const user = await new User({ socialId : profile.id, name: profile.name.givenName+" "+profile.name.familyName, source: "google"}).save();
+        const user = await new User({ userId : profile.id, name: profile.name.givenName+" "+profile.name.familyName, source: "google"}).save();
         done(null, user);
     })
 );
@@ -43,12 +43,12 @@ passport.use(new FacebookStrategy(
         proxy : true
     },
     async (accessToken, refreshToken, profile, done) => {
-        const existingUser =   await User.findOne({ socialId : profile.id });
+        const existingUser =   await User.findOne({ userId : profile.id });
         console.log(existingUser);
         if(existingUser)
             return done(null, existingUser); //error, user
 
-        const user = await new User({ socialId : profile.id, name: profile.name, source: "facebook"}).save();
+        const user = await new User({ userId : profile.id, name: profile.name, source: "facebook"}).save();
         done(null, user);
     })
 );
@@ -61,12 +61,12 @@ passport.use(new TwitterStrategy(
         proxy : true
     },
     async (accessToken, refreshToken, profile, done) => {
-        const existingUser =   await User.findOne({ socialId : profile.id });
+        const existingUser =   await User.findOne({ userId : profile.id });
         console.log(profile);
         if(existingUser)
             return done(null, existingUser); //error, user
 
-        const user = await new User({ socialId : profile.id, name: profile.displayName, source: "twitter"}).save();
+        const user = await new User({ userId : profile.id, name: profile.displayName, source: "twitter"}).save();
         done(null, user);
     })
 );

@@ -13,6 +13,7 @@ app.set('public', path.join(__dirname, './app/public'));
 
 require('./app/models/User');//should come before passport
 require('./app/models/Player');
+require('./app/models/UserPlayers');
 require('./app/services/passport');
 
 mongoose.connect(keys.mongoose.uri);
