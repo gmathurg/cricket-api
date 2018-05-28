@@ -13,6 +13,8 @@ app.set('public', path.join(__dirname, './app/public'));
 
 require('./app/models/User');//should come before passport
 require('./app/models/Player');
+require('./app/models/Squad');
+require('./app/models/PlayerStats');
 require('./app/models/UserPlayers');
 require('./app/services/passport');
 
@@ -34,6 +36,7 @@ app.use(bodyParser.json());
 
 require('./app/routes/authentication')(app);
 require('./app/routes/cricketApi')(app);
+require('./app/routes/fantasy')(app);
 require('./app/routes/misc')(app);
 
 port = process.env.PORT || 8008;

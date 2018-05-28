@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
-    userId : String,
-    players : {
-        type : 'object',
-        properties : {
-            pId : String,
-            isCaptain : Boolean,
-            isSubstitute : Boolean
-        }
-    }
+const player = new Schema({
+	pId : String,
+	isCaptain : Boolean,
+	isSubstitute : Boolean
 });
 
-mongoose.model('userPlayers', userSchema);
+const userPlayers = new Schema({
+    _user : {type : Schema.Types.ObjectId, ref: 'users'},
+	teamName : String,
+    players : [player]
+});
+
+mongoose.model('userplayers', userPlayers);

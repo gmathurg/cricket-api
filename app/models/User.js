@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-    usreId : String,
+    userId : String,
     name : {},
     source: String,
     isAdmin: Boolean,

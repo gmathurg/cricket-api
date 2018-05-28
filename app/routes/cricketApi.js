@@ -6,6 +6,7 @@ const axios = require("axios");
 const xml2Json = require('xml2json');
 
 const Player = mongoose.model('players');
+const PlayerStats = mongoose.model('playerstats');
 const keys = require("../config/keys");
 const requireLogin = require('../middlewares/requireLogin');
 const cricinfoScoreURL = 'http://www.cricinfo.com/ci/engine/match/';
@@ -75,14 +76,27 @@ module.exports = app => {
         })
     });
 
-    app.get('/api/cricket/player/:id', (req, res) => {
+    app.get('/api/cricket/player/:id', async (req, res) => {
         const pId = req.params.id;
-        request.get({ url: "http://cricapi.com/api/playerStats?apikey="+keys.cricketApi.api_key+"&pid="+pId },
-            (error, response, body) => {
-                const player = JSON.parse(body);
-                res.send(player);
-            }
-        )
+		const player = PlayerStats.findOne({'pid': pId}, (err, result) => {
+			if (result) {
+				console.log("from db");
+				res.send(result);
+			}
+			else {
+				console.log("from api");
+				request.get({ url: "http://cricapi.com/api/playerStats?apikey="+keys.cricketApi.api_key+"&pid="+pId},
+					async (error, response, body) => {
+				        if(!error) {
+							const player = JSON.parse(body);
+							await new PlayerStats(player).save();
+							await res.send(player);
+                        }
+                        res.send(error);
+					}
+				);
+			}
+		})
     });
 
     // app.get('/api/cricket/news', (req, res) => {
@@ -103,7 +117,6 @@ module.exports = app => {
             }
         )
     })
-
 };
 
 
