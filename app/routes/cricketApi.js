@@ -8,7 +8,6 @@ const xml2Json = require('xml2json');
 const Player = mongoose.model('players');
 const PlayerStats = mongoose.model('playerstats');
 const keys = require("../config/keys");
-const requireLogin = require('../middlewares/requireLogin');
 const cricinfoScoreURL = 'http://www.cricinfo.com/ci/engine/match/';
 
 
@@ -109,7 +108,20 @@ module.exports = app => {
     // })
 
     app.get('/api/cricket/news', (req, res) => {
-        const code = req.query.code;
+    	const countryCodeMap = {
+    		'world' : 0,
+    		'england' : 1,
+    		'australia' : 2,
+    		'south africa' : 3,
+    		'west indies' : 4,
+    		'new zealand' : 5,
+    		'india' : 6,
+    		'pakistan' : 7,
+    		'sri lanka' : 8,
+    		'zimbabwe' : 9,
+
+		};
+        const code = countryCodeMap[req.query.country.toLowerCase()] || 0;
         request.get({ url: "http://www.espncricinfo.com/rss/content/story/feeds/" + code +".xml" },
             (error, response, body) => {
                 const news = JSON.parse(xml2Json.toJson(body));

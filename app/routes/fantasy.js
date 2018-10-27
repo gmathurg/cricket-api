@@ -9,13 +9,22 @@ const Squad = mongoose.model('squads');
 const Player = mongoose.model('players');
 const UserPlayers = mongoose.model('userplayers');
 const requireLogin = require('../middlewares/requireLogin');
+const _ = require('lodash');
+
+const user = { credits: 0,
+	_id: '5afbd9355ccdb86c1008adac',
+	userId: '118222832547188023927',
+	name: 'Gaurav Mathur',
+	isAdmin: false,
+	source: 'google',
+	__v: 0 };
 
 module.exports = app => {
 
 	app.get('/api/fantasy/userPlayers', requireLogin, (req, res) => {
 		let response = {};
-		console.log("userId", req.user.id);
-		User.findOne({userId: req.user.id}, async (err, result) => {
+		const userId = _.has(req, 'user.userId') || user.userId;
+			User.findOne({userId: userId}, async (err, result) => {
 			const userPlayer =  await UserPlayers.findOne({_user: result._id}, function(err, result){
 				if(err){
 					console.log(err);
@@ -37,7 +46,8 @@ module.exports = app => {
         const pId = req.params.id;
         const request = req.body;
         let response = {};
-        User.findOne({userId: req.user.id}, async (err, result) => {
+		const userId = _.has(req, 'user.userId') || user.userId;
+        User.findOne({userId: userId}, async (err, result) => {
 			let player = {
 				pId : pId,
 				isCaptain : request.isCaptain || false,
@@ -114,7 +124,9 @@ module.exports = app => {
 	app.delete('/api/fantasy/player/:id', requireLogin, (req, res) => {
 		const pId = req.params.id;
 		let response = {};
-		User.findOne({userId: req.user.id}, async (err, result) => {
+		const userId = _.has(req, 'user.userId') || user.userId;
+
+		User.findOne({userId: userId}, async (err, result) => {
 
 			let userPlayer =  await UserPlayers.findOne({_user: result._id});
 
@@ -141,7 +153,7 @@ module.exports = app => {
 		});
 	});
 
-	app.get('/api/fantasy/squad/:matchId', requireLogin, async (req, res) => {
+	app.get('/api/fantasy/squad/:matchId', async (req, res) => {
 		const mId = req.params.matchId;
 		const squad = Squad.findOne({'matchId': mId}, (err, result) => {
 			if (result) {
@@ -160,7 +172,8 @@ module.exports = app => {
 							response.squad = result.squad;
 							await res.send(response);
 						}
-						res.send(error);
+						else
+							res.send(error);
 					}
 				);
 			}

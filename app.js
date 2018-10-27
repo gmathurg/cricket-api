@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 require('./app/routes/authentication')(app);
 require('./app/routes/cricketApi')(app);
 require('./app/routes/fantasy')(app);
-require('./app/routes/misc')(app);
+require('./app/routes/home')(app);
 
 port = process.env.PORT || 8008;
 app.listen(port, function () {
