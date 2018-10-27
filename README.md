@@ -1,30 +1,37 @@
-Cricket Api
+# Setup
+```
+npm install
+npm run server
 
-Current Matches
+```
+
+# Cricket Api
+
+## Current Matches
   GET http://localhost:8008/api/cricket/matches
   
-Player Search
+## Player Search
   GET http://localhost:8008/api/cricket/search?name=Sachin
   
-Player Details (player ID)
+## Player Details (player ID)
   GET http://localhost:8008/api/cricket/player/35320
   
-Cricket News
+## Cricket News
   GET http://localhost:8008/api/cricket/news/?country=india
   
-Fantasy Cricket
+# Fantasy Cricket
 
-Login using Google
+## Login using Google
   GET http://localhost:8008/api/auth/google
   
-User Players
+## User Players
   GET http://localhost:8008/api/fantasy/userPlayers
   
-Add Player  
+## Add Player  
   POST http://localhost:8008/api/fantasy/player/35320
   
-Delete Player  
+## Delete Player  
   DELETE http://localhost:8008/api/fantasy/player/35320
   
-Get Match Squads
+## Get Match Squads
   GET http://localhost:8008/api/fantasy/squad/1157374
